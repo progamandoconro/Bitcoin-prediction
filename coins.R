@@ -1,12 +1,13 @@
 # Para obtener los urls de los documentos csv disponibles en coinmetrics utilizamos el promagrama lynx (sudo apt-get install lynx o sudo yum install lynx) y awk para seleccionar las lineas con .csv en el código html5 de la web
 # sudo lynx -dumb https://coinmetrics.io/data-downloads/ | awk '/csv/{print $2}' > urls.txt
 # colocamos el archivo "urls.txt" en la carpeta donde queramos almacenar la data a descargar 
-  
+   
   library(dplyr) # Para facilitar la mineria de datos
   library(reticulate) # Conectamos R con Python ('install.packages ("reticulate")' en R)
   library(zoo) # Tratamiento para los datos faltantes
   library(caret) # Selección de variables
   library(lubridate) # Tratamiento para las fechas en la data
+ 
   
   setwd('~/Dropbox/DataScience/coinmetrics/') # Asignamos la carpeta de trabajado donde tenemos el archivo con las urls
   
@@ -21,7 +22,7 @@
  
   n_to_eval = 2000
   
-  n_i <- 1 ; n_f <- NROW(output) - n_to_eval ; n <- n_f-n_i
+  n_i <- 1 ; n_f <- NROW(output) - n_to_eval ; n <- n_f-n_i +1
   
   output <- read.csv('btc.csv')$PriceUSD[n_i:n_f]
   
@@ -44,8 +45,12 @@
   
   colnames(input)<- make.unique( colnames(input))
  
-# Agreguemos data de la fecha a nuestras variables y eliminemos las variables 'date' debido a su formato no apropiado para los algoritmos
+# Agreguemos data de la fecha a nuestras variables y eliminemos las variables repetidas con las fechas. Además, reemplazamos los datos faltantes por la media de año, si continuan habiendo NA, por la media mensual y diaria. De esta forma aseguramos que no haya datos faltantes en nuestro set.
   
   input$Dia <- day(input$date) ; input$Mes <- month(input$date) ; input$Anio <- year(input$date)
  
-  input <- select(input,--starts_with("date"))
+  input <- select (input,-starts_with("date"))%>%
+           select(-starts_with("date."))%>%
+           na.aggregate(by='Anio')%>%
+           na.aggregate(by='Mes')%>%
+           na.aggregate(by='Dia')
