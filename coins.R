@@ -1,4 +1,4 @@
-  # Para obtener los urls de los documentos csv disponibles en coinmetrics utilizamos el promagrama lynx (sudo apt-get install lynx o sudo yum install lynx) y awk para seleccionar las lineas con .csv en el código html5 de la web
+   # Para obtener los urls de los documentos csv disponibles en coinmetrics utilizamos el promagrama lynx (sudo apt-get install lynx o sudo yum install lynx) y awk para seleccionar las lineas con .csv en el código html5 de la web
   # sudo lynx -dumb https://coinmetrics.io/data-downloads/ | awk '/csv/{print $2}' > urls.txt
   # colocamos el archivo "urls.txt" en la carpeta donde queramos almacenar la data a descargar 
   
@@ -67,14 +67,54 @@
   
   input <- input[,-foo(input)]
   
-  #   Seleccionamos el modelo con más información, evitando las variables redundantes.  
+  # normalizamos la data entre valores 0 a 1
+  
+  normalize <- function(x) { 
+    return((x - min(x)) / (max(x) - min(x)))
+  }
+  input<- lapply(input, normalize)%>%
+    as.data.frame()
+  
+  # Data aleatoria y cortar seccion de validacion
+  
+  alea <- sample(1:nrow(input),nrow(input))
+  ix <- alea[1: floor(NROW(alea))]
+  
+  d_train <- input[ix,]
+  d_cv <- input[-ix,]
+  
+  
+  
+  # Seleccionamos el modelo con más información, evitando las variables redundantes.  
   
   library(MASS) # Selección de modelo
   
-  feat_impor <-  stepAIC(glm(input$OUTPUT~.,data = input[,-input$OUTPUT]))
-  summary( lm( feat_impor$formula, data = input) )
+  feat_impor <-  stepAIC(glm(d_train$OUTPUT~.,data = d_train[,-d_train$OUTPUT]))
+  m <- lm( feat_impor$formula, data = input)
+  summary( m )
+  
+  pred <- predict(m, d_cv[,-d_cv$OUTPUT])
+  
+  
   
   detach("package:MASS")
+  
+  
+  
+  
+  library(neuralnet)
+   
+ net <-  neuralnet(d_train$OUTPUT~.,data = d_train[,-d_train$OUTPUT], hidden = 1)
+  
+ pred <- compute(net, d_cv[,-d_cv$OUTPUT])
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
   
 
 
