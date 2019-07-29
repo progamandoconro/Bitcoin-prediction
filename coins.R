@@ -1,4 +1,4 @@
-              # Para obtener los urls de los documentos csv disponibles en coinmetrics utilizamos el promagrama lynx (sudo apt-get install lynx o sudo yum install lynx) y awk para seleccionar las lineas con .csv en el código html5 de la web
+                    # Para obtener los urls de los documentos csv disponibles en coinmetrics utilizamos el promagrama lynx (sudo apt-get install lynx o sudo yum install lynx) y awk para seleccionar las lineas con .csv en el código html5 de la web
             # sudo lynx -dumb https://coinmetrics.io/data-downloads/ | awk '/csv/{print $2}' > urls.txt
             # colocamos el archivo "urls.txt" en la carpeta donde queramos almacenar la data a descargar 
             
@@ -175,11 +175,11 @@
         text(x=nrow(input)-1799,
              y=input$OUTPUT[nrow(input)]-0.01,
              output_f$date[nrow(output_f)])
-        text(x=50,y=0.51, paste( 'Precio del día',output_f$date[nrow(output_f)],'menos la predicción del día siguiente' ))
+        text(x=50,y=0.51, paste( 'Predicción para el día siguiente a',output_f$date[nrow(output_f)],'menos el valor real de ese día ' ))
         text(x=50,y=0.5, p_fut - input$OUTPUT[nrow(input)])
          
  
- 
+       
  
   
 
