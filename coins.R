@@ -1,20 +1,22 @@
-                    # Para obtener los urls de los documentos csv disponibles en coinmetrics utilizamos el promagrama lynx (sudo apt-get install lynx o sudo yum install lynx) y awk para seleccionar las lineas con .csv en el código html5 de la web
+                       # Para obtener los urls de los documentos csv disponibles en coinmetrics utilizamos el promagrama lynx (sudo apt-get install lynx o sudo yum install lynx) y awk para seleccionar las lineas con .csv en el código html5 de la web
             # sudo lynx -dumb https://coinmetrics.io/data-downloads/ | awk '/csv/{print $2}' > urls.txt
             # colocamos el archivo "urls.txt" en la carpeta donde queramos almacenar la data a descargar 
             
-            
+###########################################################################################################
+################################ BITCOIN ##################################################################
+###########################################################################################################
+          
             library(dplyr) # Para facilitar la mineria de datos
             library(reticulate) # Conectamos R con Python ('install.packages ("reticulate")' en R)
             library(zoo) # Tratamiento para los datos faltantes
             library(caret) # Selección de variables
             library(lubridate) # Tratamiento para las fechas en la data
            
-            
               setwd('~/Dropbox/DataScience/coinmetrics/') # Asignamos la carpeta de trabajado donde tenemos el archivo con las urls
             
-             os <- import("os") # Utilizamos python para importar el modulo con comandos de nuestro sistema operativo, en mi caso, Linux
-                 os$system ("find *.csv -delete") # Borrar los archivos csv no actualizados
-             os$system ("wget -N urls.txt -i  ") # Utilizamos el programa wget para descargar la data actualizada (necesitas instalar wget en tu sistema, por ejemplo, con 'sudo apt-get install wget' o 'sudo yum install wget' )
+            # os <- import("os") # Utilizamos python para importar el modulo con comandos de nuestro sistema operativo, en mi caso, Linux
+            # os$system ("find *.csv -delete") # Borrar los archivos csv no actualizados
+            # os$system ("wget -N urls.txt -i  ") # Utilizamos el programa wget para descargar la data actualizada (necesitas instalar wget en tu sistema, por ejemplo, con 'sudo apt-get install wget' o 'sudo yum install wget' )
             
             # Utilizamos el precio en $ del Bitcoin como variable respuesta, la que nos interesa predecir.
             
@@ -22,9 +24,9 @@
               
               # Debido a que los archivos csv descargados tienen diferentes numeros de filas o casos, 
               
-              n_to_eval = 2000
+      
               
-              n_i <- 1 ; n_f <- NROW(output) - n_to_eval ; n <- n_f-n_i +1
+              n_i <- 2000 ; n_f <- NROW(output); n <- n_f-n_i +1
               
               output <- read.csv('btc.csv')$PriceUSD[n_i:n_f]
               
@@ -58,7 +60,8 @@
                 select(-starts_with("date."))%>%
                 na.aggregate(by='Anio')%>%
                 na.aggregate(by='Mes')%>%
-                na.aggregate(by='Dia')
+                na.aggregate(by='Dia')%>%
+                na.aggregate()
               
               # Vamos a eliminar la data redundante 
               
@@ -76,7 +79,8 @@
                 select(-starts_with("date."))%>%
                 na.aggregate(by='Anio')%>%
                 na.aggregate(by='Mes')%>%
-                na.aggregate(by='Dia')
+                na.aggregate(by='Dia')%>%
+                na.aggregate()
               
               
               input_fut <- input_fut[,-foo(input_fut)]
@@ -103,15 +107,15 @@
               
               ######################## Selección de variables de entrada #####################
               
-              # library(MASS)  
+               library(MASS)  
               
-              # m = stepAIC(glm(d_train$OUTPUT~.,data = d_train[,-d_train$OUTPUT]))
+               m = stepAIC(glm(d_train$OUTPUT~.,data = d_train[,-d_train$OUTPUT]))
               
-              # detach("package:MASS", unload = TRUE)
+              detach("package:MASS", unload = TRUE)
               
              #################### Model result from stepAIC ##################################
              
-               formula <-  d_train$OUTPUT ~ BlkCnt + BlkSizeByte + BlkSizeMeanByte + CapMVRVCur + 
+              # formula <-  d_train$OUTPUT ~ BlkCnt + BlkSizeByte + BlkSizeMeanByte + CapMVRVCur + 
                 DiffMean + FeeMeanNtv + FeeMedNtv + IssContNtv + IssContPctAnn + 
                 NVTAdj90 + ROI1yr + ROI30d + TxTfrValMedNtv + VtyDayRet180d + 
                 VtyDayRet60d + BlkCnt.1 + BlkSizeByte.1 + BlkSizeMeanByte.1 + 
@@ -168,17 +172,16 @@
          
         ### Graficar los resultados 
          
-        plot(input$OUTPUT[1800:nrow(input)],xlim = c(0,80), xlab = 'Últimos dos meses', ylab = 'Precio de Bitcoin escalado ($)')
-        points(p_rf[1800:nrow(input)],col=2)  
+        plot(input$OUTPUT[1800:nrow(input)], xlab = 'Últimos dos meses', ylab = 'Precio de Bitcoin escalado ($)',cex=0.05)
+        points(p_rf[1800:nrow(input)],col=2,cex=0.05)  
         lines(p_rf[1800:nrow(input)],col=2)  
         lines(input$OUTPUT[1800:nrow(input)])
-        text(x=nrow(input)-1799,
-             y=input$OUTPUT[nrow(input)]-0.01,
-             output_f$date[nrow(output_f)])
-        text(x=50,y=0.51, paste( 'Predicción para el día siguiente a',output_f$date[nrow(output_f)],'menos el valor real de ese día ' ))
-        text(x=50,y=0.5, p_fut - input$OUTPUT[nrow(input)])
-       
- ############################################################################################################
+        text(x=30,y=0.42, paste( 'Predicción para el día siguiente a',output_f$date[nrow(output_f)],'menos el valor real de ese día ' ))
+        text(x=30,y=0.4, p_fut - input$OUTPUT[nrow(input)])
+         
+ 
+        
+         ############################################################################################################
 ################################################## Ethereum ##################################################
 ############################################################################################################
   
