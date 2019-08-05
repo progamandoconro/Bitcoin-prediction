@@ -147,3 +147,9 @@ plot(input$OUTPUT, xlab = 'Días desde creación', ylab = 'Precio de Litecoin es
 points(p_rf[1:nrow(input)],col=2)  
 lines(p_rf[1:nrow(input)],col=2)  
 lines(input$OUTPUT[1:nrow(input)])
+                
+tomorrow_ltc <- p_fut - input$OUTPUT[nrow(input)]
+write.csv(tomorrow_ltc,'tomorrow_ltc.csv')
+   
+                
+                
