@@ -4,16 +4,10 @@
 ############################################################################################################
 
 library(dplyr) # Para facilitar la mineria de datos
-library(reticulate) # Conectamos R con Python ('install.packages ("reticulate")' en R)
 library(zoo) # Tratamiento para los datos faltantes
 library(caret) # Selección de variables
 library(lubridate) # Tratamiento para las fechas en la data
 
-setwd('~/Dropbox/DataScience/coinmetrics/') # Asignamos la carpeta de trabajado donde tenemos el archivo con las urls
-
-os <- import("os") # Utilizamos python para importar el modulo con comandos de nuestro sistema operativo, en mi caso, Linux
-os$system ("find *.csv -delete") # Borrar los archivos csv no actualizados
-os$system ("wget -N urls.txt -i  ") # Utilizamos el programa wget para descargar la data actualizada (necesitas instalar wget en tu sistema, por ejemplo, con 'sudo apt-get install wget' o 'sudo yum install wget' )
 
 # Utilizamos el precio en $ del Ethereum  como variable respuesta, la que nos interesa predecir.
 
