@@ -180,3 +180,7 @@ plot(input$OUTPUT, xlab = 'Días desde creación', ylab = 'Precio de Ethereum es
 points(p_rf[1:nrow(input)],col=2)  
 lines(p_rf[1:nrow(input)],col=2)  
 lines(input$OUTPUT[1:nrow(input)])
+
+
+tomorrow_eth <- p_fut - input$OUTPUT[nrow(input)]
+write.csv(tomorrow_eth,'tomorrow_eth.csv')                
