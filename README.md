@@ -1,5 +1,4 @@
-# MR. RoBot 
-## Bitcoin (and other crypto)-prediction
+# MR. RoBot. Bitcoin (and other crypto)-predictor
 ### Created by: Rodrigo Diaz-Lupanow
 
 Data downloaded from coinmetrics.io
