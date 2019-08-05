@@ -3,7 +3,6 @@
 ############################################################################################################
 
 library(dplyr) # Para facilitar la mineria de datos
-library(reticulate) # Conectamos R con Python ('install.packages ("reticulate")' en R)
 library(zoo) # Tratamiento para los datos faltantes
 library(caret) # Selección de variables
 library(lubridate) # Tratamiento para las fechas en la data
