@@ -1,4 +1,5 @@
-# Bitcoin(and other crypto)-prediction
+# MR. RoBot 
+# Bitcoin (and other crypto)-prediction
 Data downloaded from coinmetrics.io
 
 This is a multi-plataform software (for Linux, Windows and Mac).
