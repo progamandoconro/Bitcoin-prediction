@@ -1,6 +1,7 @@
-## MR. RoBot 
-Created by: Rodrigo Diaz-Lupanow
-# Bitcoin (and other crypto)-prediction
+# MR. RoBot 
+## Bitcoin (and other crypto)-prediction
+### Created by: Rodrigo Diaz-Lupanow
+
 Data downloaded from coinmetrics.io
 
 This is a multi-plataform software (for Linux, Windows and Mac).
