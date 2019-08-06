@@ -142,14 +142,22 @@ output_f$date[nrow(output_f)]
 p_fut <- predict(rf, input_fut[NROW(input_fut),-input_fut$OUTPUT])
 
 ### Graficar los resultados 
-
+                
+jpeg('plot_ltc.jpg')
+                
 plot(input$OUTPUT, xlab = 'Días desde creación', ylab = 'Precio de Litecoin escalado ($)')
 points(p_rf[1:nrow(input)],col=2)  
 lines(p_rf[1:nrow(input)],col=2)  
 lines(input$OUTPUT[1:nrow(input)])
                 
+dev.off()                 
+ 
+# Resultados para mañana                
+                
 tomorrow_ltc <- p_fut - input$OUTPUT[nrow(input)]
 write.csv(tomorrow_ltc,'tomorrow_ltc.csv')
    
-                
+
+
+               
                 
