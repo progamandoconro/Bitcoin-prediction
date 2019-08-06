@@ -175,11 +175,17 @@ p_fut <- predict(rf, input_fut[NROW(input_fut),-input_fut$OUTPUT])
 
 ### Graficar los resultados 
 
+jpeg('rplot','plot_xmr.jpg')
+                       
 plot(input$OUTPUT, xlab = 'Días desde creación', ylab = 'Precio de Ethereum escalado ($)')
 points(p_rf[1:nrow(input)],col=2)  
 lines(p_rf[1:nrow(input)],col=2)  
 lines(input$OUTPUT[1:nrow(input)])
 
-
+dev.off()
+                
 tomorrow_eth <- p_fut - input$OUTPUT[nrow(input)]
-write.csv(tomorrow_eth,'tomorrow_eth.csv')                
+write.csv(tomorrow_eth,'tomorrow_eth.csv')   
+                
+#######################################################################################################
+#######################################################################################################
