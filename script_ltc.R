@@ -8,7 +8,7 @@ library(zoo) # Tratamiento para los datos faltantes
 library(caret) # Selección de variables
 library(lubridate) # Tratamiento para las fechas en la data
 
-# Utilizamos el precio en $ del Ethereum  como variable respuesta, la que nos interesa predecir.
+##################### Seleccionar la variable target ########################################################.
 
 output <- read.csv('ltc.csv')
 
@@ -20,13 +20,10 @@ n_i <- 1 ; n_f <- NROW(output)  ; n <- n_f-n_i +1
 
 output <- read.csv('ltc.csv')$PriceUSD[n_i:n_f]
 
-# Utilizamos los archivos descargados para seleccionar las variables explicatorias o de entrada para el algoritmo.
-# Para eso, listamos todos archivos csv y leemos cada uno con 'read.csv' gracias a 'lapply'
+########### Seleccionar las variables explicativas ######################################################
 
 input <- list.files(pattern = ".csv") %>%
   lapply (read.csv) 
-
-# Seleccionamos las variables explicativas que tengan el mismo número de casos que la variable respuesta, las cortamos en funcion de tales casos y  finalmente unimos todas la variables en una sola data.frame
 
 crip <- sapply (input, function(x) nrow(x) < (n_f - n_i) )
 
@@ -39,7 +36,7 @@ input <- do.call(cbind, input)
 
 colnames(input)<- make.unique( colnames(input))
 
-# Agreguemos data de la fecha a nuestras variables. Creamos los datos cruzados para tener las predicciones de mañana con los datos de hoy. liminemos las variables repetidas con las fechas. Además, reemplazamos los datos faltantes por la media de año, si continuan habiendo NA, por la media mensual y diaria. De esta forma aseguramos que no haya datos faltantes en nuestro set.
+############ Transformar fecha. Crear datos cruzados. Tratar los NA #######################################
 
 input$Dia <- day(input$date) ; input$Mes <- month(input$date) ; input$Anio <- year(input$date)
 input_fut <- input
@@ -54,7 +51,7 @@ input <- select (input,-starts_with("date"))%>%
   na.aggregate(by='Dia')%>%
   na.aggregate()
 
-# Vamos a eliminar la data redundante 
+######################### Eliminar la data redundante ####################################################
 
 foo <- function(input) {
   out <- lapply(input, function(x) length(unique(x)))
@@ -75,7 +72,7 @@ input_fut <- select (input_fut,-starts_with("date"))%>%
 
 input_fut <- input_fut[,-foo(input_fut)]
 
-# normalizamos la data entre valores 0 a 1
+######################## Normalizar la data entre valores 0 a 1 ###########################################
 
 normalize <- function(x) { 
   return((x - min(x)) / (max(x) - min(x)))
@@ -86,7 +83,8 @@ input_fut<- lapply(input_fut, normalize)%>%
   as.data.frame()
 
 
-# Data aleatoria y cortar seccion de validacion
+###################### Data aleatoria y cortar seccion de validacion ######################################
+                
 set.seed(7)
 alea <- sample(1:nrow(input),nrow(input))
 ix <- alea[1: floor(NROW(alea)*0.7)]
@@ -94,7 +92,7 @@ ix <- alea[1: floor(NROW(alea)*0.7)]
 d_train <- input[ix,]
 d_cv <- input[-ix,]
 
-######################## Selección de variables de entrada #####################
+######################## Selección de variables de entrada #################################################
 
 library(MASS)  
 
@@ -102,7 +100,7 @@ m = stepAIC(glm(d_train$OUTPUT~.,data = d_train[,-d_train$OUTPUT]))
 
 detach("package:MASS", unload = TRUE)
 
-#################### Model result from stepAIC ##################################
+#################### Model result from stepAIC ##############################################################
 
 formula <-    d_train$OUTPUT ~ BlkCnt + CapMVRVCur + CapMrktCurUSD + CapRealUSD + 
   DiffMean + FeeMeanNtv + FeeMedNtv + IssContNtv + NVTAdj90 + 
@@ -116,7 +114,7 @@ formula <-    d_train$OUTPUT ~ BlkCnt + CapMVRVCur + CapMrktCurUSD + CapRealUSD 
   TxTfrValNtv.1 + TxTfrValUSD.1 + VtyDayRet180d.1 + VtyDayRet30d.1 + 
   VtyDayRet60d.1 + Dia + Mes + Anio
 
-############ Ejecutar el algoritmo Random Forest #####################################
+############ Ejecutar el algoritmo Random Forest #############################################################
 
 library(randomForest)
 
@@ -138,7 +136,7 @@ output_f <- read.csv('eth.csv')
 output_f$date[nrow(output_f)] 
 p_fut <- predict(rf, input_fut[NROW(input_fut),-input_fut$OUTPUT])
 
-# Graficar los resultados 
+##################### Graficar los resultados #################################################################
                 
 jpeg('plot_ltc.jpg')
                 
@@ -149,7 +147,7 @@ lines(input$OUTPUT[1:nrow(input)])
                 
 dev.off()                 
  
-######################## Resultados para mañana ##############################################################              
+######################## Resultados para mañana ###############################################################           
                 
 tomorrow_ltc <- p_fut - input$OUTPUT[nrow(input)]
 write.csv(tomorrow_ltc,'tomorrow_ltc.csv')
