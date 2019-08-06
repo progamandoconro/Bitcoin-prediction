@@ -1,3 +1,6 @@
+![alt text] (https://programandoconro.wordpress.com/)
+
+
 # Mr. RoBot. Bitcoin (and other crypto)-predictor
 ### Created by: Rodrigo Díaz-Lupanow
 
