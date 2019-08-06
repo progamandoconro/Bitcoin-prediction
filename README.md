@@ -1,8 +1,6 @@
 # Mr. RoBot. Bitcoin (and other crypto)-predictor
 ### Created by: Rodrigo Diaz-Lupanow
 
-Data downloaded from coinmetrics.io
-
 This is a multi-plataform software (for Linux, Windows and Mac).
 
 Required software: Docker. 
