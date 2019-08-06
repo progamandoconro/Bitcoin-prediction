@@ -162,11 +162,21 @@ output_f <- read.csv('eth.csv')
 output_f$date[nrow(output_f)] 
 p_fut <- predict(rf, input_fut[NROW(input_fut),-input_fut$OUTPUT])
 
-### Graficar los resultados 
-
+##################### Graficar los resultados #################################################################
+                
+jpeg('plot_xmr.jpg')
+                
 plot(input$OUTPUT, xlab = 'Días desde creación', ylab = 'Precio de Monero escalado ($)')
 points(p_rf[1:nrow(input)],col=2)  
 lines(p_rf[1:nrow(input)],col=2)  
 lines(input$OUTPUT[1:nrow(input)])
-
-
+                
+dev.off()                 
+ 
+######################## Resultados para mañana ###############################################################           
+                
+tomorrow_xmr <- p_fut - input$OUTPUT[nrow(input)]
+write.csv(tomorrow_xmr,'tomorrow_xmr.csv')
+                
+###############################################################################################################              
+###############################################################################################################
