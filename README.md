@@ -9,7 +9,13 @@ Required software: Docker.
 
 Docker will create a container running Debian and will install R (r-base), git, wget, lynx. After that it will download script from this github and install required R packages (randomForest, dplyr, MASS, lubridate, zoo). Finally, a script with the algorithm will be executated. 
 
+# Bitcoin
+
 ![alt text](https://github.com/progamandoconro/Bitcoin-prediction/blob/master/bitcoin_5_ago_2019?raw=true)
+
+# Litecoin
+
+![alt text](https://raw.githubusercontent.com/progamandoconro/Bitcoin-prediction/master/Screenshot_20190806_160605.png)
 
 App still in developement. Final appearence will be like this: 
 
