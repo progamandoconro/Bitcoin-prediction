@@ -122,7 +122,7 @@ library(randomForest)
 set.seed(7)   
 rf <-  randomForest(formula,data = d_train[,-d_train$OUTPUT])
 
-output_f <- read.csv('eth.csv')
+output_f <- read.csv('ltc.csv')
 output_f$date[nrow(output_f)] 
 p_fut <- predict(rf, input_fut[NROW(input_fut),-input_fut$OUTPUT])
 p_60 <- predict(rf, input_60[,-input_60$OUTPUT])
