@@ -1,6 +1,7 @@
 <div style="text-align:center"><img src="https://programandoconro.files.wordpress.com/2019/07/cropped-net-2.png?w=300" /></div>
 
-# Crypto-Lab. Bitcoin (and other crypto)-predictor
+# Crypto-Lab
+# Bitcoin (and other crypto)-predictor
 #### Creado por: Rodrigo Díaz-Lupanow
 #### https://programandoconro.wordpress.com/
 #### programandoconro@gmail.com
