@@ -1,9 +1,9 @@
 <div style="text-align:center"><img src="https://programandoconro.files.wordpress.com/2019/07/cropped-net-2.png?w=300" /></div>
 
 # Mr. RoBot. Bitcoin (and other crypto)-predictor
-### Created by: Rodrigo Díaz-Lupanow
-### https://programandoconro.wordpress.com/
-### programandoconro@gmail.com
+#### Created by: Rodrigo Díaz-Lupanow
+#### https://programandoconro.wordpress.com/
+#### programandoconro@gmail.com
 
 Resultados hasta la fecha indican 90% de éxito en predecir el precio de cripto-monedas para el día siguiente.
 
