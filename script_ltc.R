@@ -5,7 +5,6 @@
 
 library(dplyr) # Para facilitar la mineria de datos
 library(zoo) # Tratamiento para los datos faltantes
-library(caret) # Selección de variables
 library(lubridate) # Tratamiento para las fechas en la data
 
 ##################### Seleccionar la variable target ########################################################.
