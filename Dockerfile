@@ -1,4 +1,5 @@
 ############### My docker container with an App to predict tomorrow's Litecoin price ##########################
+# sudo docker build --build-arg .
 FROM debian
 RUN apt-get update && apt-get install r-base \
 wget lynx git -y
