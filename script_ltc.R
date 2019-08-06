@@ -72,7 +72,7 @@ input_fut <- select (input_fut,-starts_with("date"))%>%
 
 input_fut <- input_fut[,-foo(input_fut)]
 
-######################## Normalizar la data entre valores 0 a 1 ###########################################
+######################## Normalizar la data entre valores desde 0 hasta 1 ###########################################
 
 normalize <- function(x) { 
   return((x - min(x)) / (max(x) - min(x)))
@@ -86,11 +86,12 @@ input_fut<- lapply(input_fut, normalize)%>%
 ###################### Data aleatoria y cortar seccion de validacion ######################################
                 
 set.seed(7)
+input_60 <- input[(nrow(input)-60):nrow(input),]  
+input <- input[1:nrow(input)-60,]                
 alea <- sample(1:nrow(input),nrow(input))
-ix <- alea[1: floor(NROW(alea)*0.7)]
+ix <- alea[1: NROW(alea)]
 
 d_train <- input[ix,]
-d_cv <- input[-ix,]
 
 ######################## Selección de variables de entrada #################################################
 
@@ -121,36 +122,24 @@ library(randomForest)
 set.seed(7)   
 rf <-  randomForest(m$formula,data = d_train[,-d_train$OUTPUT])
 
-p_rf <- predict(rf, d_cv[,-d_cv$OUTPUT])
-
-cor(p_rf,d_cv$OUTPUT)
-RMSE(p_rf,d_cv$OUTPUT)
-
-set.seed(2)
-p_rf <- predict(rf, input[,-input$OUTPUT])
-
-cor(p_rf,input$OUTPUT)
-RMSE(p_rf,input$OUTPUT)
-
 output_f <- read.csv('eth.csv')
 output_f$date[nrow(output_f)] 
 p_fut <- predict(rf, input_fut[NROW(input_fut),-input_fut$OUTPUT])
-
+p_60 <- predict(rf, input_60[,-input_60$OUTPUT])
 ##################### Graficar los resultados #################################################################
                 
 jpeg('plot_ltc.jpg')
                 
-plot(input$OUTPUT[(nrow(input)-60):nrow(input)],xlab = 'Días desde creación', ylab = 'Precio de Litecoin escalado ($)')
-points(p_rf[(nrow(input)-60):nrow(input)],col=2)  
-lines(p_rf[(nrow(input)-60):nrow(input)],col=2)  
-lines(input$OUTPUT[(nrow(input)-60):nrow(input)])
+plot(input_60$OUTPUT[,xlab = 'Días desde creación', ylab = 'Precio de Litecoin escalado ($)')
+points(p_60,col=2)  
+lines(p_60,col=2)  
+lines(input_60$OUTPUT)
                 
 dev.off()                 
  
 ######################## Resultados para mañana ###############################################################           
                 
-tomorrow_ltc <- p_fut - input$OUTPUT[nrow(input)]
-write.csv(tomorrow_ltc,'tomorrow_ltc.csv')
+
                 
 ###############################################################################################################              
 ###############################################################################################################
