@@ -8,7 +8,6 @@ library(zoo) # Tratamiento para los datos faltantes
 library(caret) # Selección de variables
 library(lubridate) # Tratamiento para las fechas en la data
 
-
 # Utilizamos el precio en $ del Ethereum  como variable respuesta, la que nos interesa predecir.
 
 output <- read.csv('ltc.csv')
@@ -95,7 +94,6 @@ ix <- alea[1: floor(NROW(alea)*0.7)]
 d_train <- input[ix,]
 d_cv <- input[-ix,]
 
-
 ######################## Selección de variables de entrada #####################
 
 library(MASS)  
@@ -117,7 +115,6 @@ formula <-    d_train$OUTPUT ~ BlkCnt + CapMVRVCur + CapMrktCurUSD + CapRealUSD 
   ROI1yr.1 + ROI30d.1 + TxCnt.1 + TxTfr.1 + TxTfrValMeanNtv.1 + 
   TxTfrValNtv.1 + TxTfrValUSD.1 + VtyDayRet180d.1 + VtyDayRet30d.1 + 
   VtyDayRet60d.1 + Dia + Mes + Anio
-
 
 ############ Ejecutar el algoritmo Random Forest #####################################
 
@@ -141,7 +138,7 @@ output_f <- read.csv('eth.csv')
 output_f$date[nrow(output_f)] 
 p_fut <- predict(rf, input_fut[NROW(input_fut),-input_fut$OUTPUT])
 
-### Graficar los resultados 
+# Graficar los resultados 
                 
 jpeg('plot_ltc.jpg')
                 
@@ -152,12 +149,10 @@ lines(input$OUTPUT[1:nrow(input)])
                 
 dev.off()                 
  
-# Resultados para mañana                
+######################## Resultados para mañana ##############################################################              
                 
 tomorrow_ltc <- p_fut - input$OUTPUT[nrow(input)]
 write.csv(tomorrow_ltc,'tomorrow_ltc.csv')
-   
-
-
-               
                 
+###############################################################################################################              
+###############################################################################################################
