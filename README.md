@@ -17,7 +17,7 @@ Docker will create a container running Debian and will install R (r-base), git, 
 
 ![alt text](https://raw.githubusercontent.com/progamandoconro/Bitcoin-prediction/master/Screenshot_20190806_160605.png)
 
-App still in developement. Final appearence will be like this: 
+App still in developement. It will have a nice Front-end, with options to choose, like Cripto-currency to predict, parameter re-tuning, boosting and bagging. Final appearence will look something like this: 
 
 ![alt text](https://raw.githubusercontent.com/progamandoconro/Bitcoin-prediction/master/Screenshot_20190727_203738.png) 
 
