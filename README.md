@@ -1,5 +1,4 @@
-![alt text](https://programandoconro.files.wordpress.com/2019/05/banner_consultor.png)
-
+![alt text](https://programandoconro.files.wordpress.com/2019/07/cropped-net-2.png?w=300)
 
 # Mr. RoBot. Bitcoin (and other crypto)-predictor
 ### Created by: Rodrigo Díaz-Lupanow
@@ -25,3 +24,5 @@ App still in developement. It will have a nice Front-end, with options to choose
 ![alt text](https://raw.githubusercontent.com/progamandoconro/Bitcoin-prediction/master/Screenshot_20190727_203738.png) 
 
 I am looking for any support to improve Mr. RoBot, if you are interested, please write to programandoconro@gmail.com, or visit programandonconro.wordpress.com/contact. 
+
+![alt text](https://programandoconro.files.wordpress.com/2019/05/banner_consultor.png)
