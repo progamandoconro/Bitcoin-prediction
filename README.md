@@ -2,14 +2,12 @@
 
 # Mr. RoBot. Bitcoin (and other crypto)-predictor
 ### Created by: Rodrigo Díaz-Lupanow
+### https://programandoconro.wordpress.com/
+### programandoconro@gmail.com
 
-Results show 90% success in predicting next day's price on many cripto.
+Resultados hasta la fecha indican 90% de éxito en predecir el precio de cripto-monedas para el día siguiente.
 
-This is a multi-plataform software (for Linux, Windows and Mac).
-
-Required software: Docker. 
-
-Docker will create a container running Debian and will install R (r-base), git, wget, lynx. After that it will download script from this github and install required R packages (randomForest, dplyr, MASS, lubridate, zoo). Finally, a script with the algorithm will be executated. 
+Mr. RoBot está desarrollado 100 % a partir de software libre y de código abierto. Basado en un sistema operativo Debian sobre el cual corren diversos programas y paquetes: R (r-base, randomForest, MASS, dplyr, lubridate, zoo), git, wget y lynx. La data cruda inicial es obtenida a partir de https://coinmetrics.io/. Este software fue desarrollado utilizando el sistema de contenedores de Docker, lo que permite su uso en Windows, Linux y Mac (incluso  Android). 
 
 # Bitcoin
 
