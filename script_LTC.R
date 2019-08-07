@@ -72,10 +72,11 @@ input_fut <- select (input_fut,-starts_with("date"))%>%
   na.aggregate()
 
 input_fut <- input_fut[,-foo(input_fut)]
-
+              
 ######################## Normalizar la data entre valores desde 0 hasta 1 ###########################################
+ 
 
-normalize <- function(x) { 
+                normalize <- function(x) { 
   return((x - min(x)) / (max(x) - min(x)))
 }
 input<- lapply(input, normalize)%>%
@@ -83,12 +84,12 @@ input<- lapply(input, normalize)%>%
 input_fut<- lapply(input_fut, normalize)%>%
   as.data.frame()
 
-
+input_60 <- input[(nrow(input)-60):nrow(input),]  
+input <- input[1:(nrow(input)-61),] 
 ###################### Data aleatoria y cortar seccion de validacion ######################################
                 
 set.seed(7)
-input_60 <- input[(nrow(input)-60):nrow(input),]  
-input <- input[1:(nrow(input)-60),]                
+
 alea <- sample(1:nrow(input),nrow(input))
 ix <- alea[1: NROW(alea)]
 
