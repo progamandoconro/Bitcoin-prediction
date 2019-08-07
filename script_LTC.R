@@ -88,7 +88,7 @@ input_fut<- lapply(input_fut, normalize)%>%
                 
 set.seed(7)
 input_60 <- input[(nrow(input)-60):nrow(input),]  
-input <- input[1:nrow(input)-60,]                
+input <- input[1:(nrow(input)-60),]                
 alea <- sample(1:nrow(input),nrow(input))
 ix <- alea[1: NROW(alea)]
 
