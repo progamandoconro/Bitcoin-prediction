@@ -19,7 +19,7 @@ n_to_eval = NROW(output)
 
 n_i <- 1 ; n_f <- NROW(output)  ; n <- n_f-n_i +1
 
-output <- read.csv('ltc.csv')$PriceUSD[n_i:n_f]
+output <- read.csv('ltc.csv')$PriceUSD
 
 ########### Seleccionar las variables explicativas ######################################################
 
@@ -100,10 +100,10 @@ d_train <- input[ix,]
 ###############################################################################################################
 ######################## Selección de variables de entrada #################################################
 
-library(MASS)  
-m = stepAIC(glm(d_train$OUTPUT~.,data = d_train[,-d_train$OUTPUT]))
+#library(MASS)  
+#m = stepAIC(glm(d_train$OUTPUT~.,data = d_train[,-d_train$OUTPUT]))
 
-detach("package:MASS", unload = TRUE)
+#detach("package:MASS", unload = TRUE)
 
 #################### Model result from stepAIC ##############################################################
 
@@ -124,7 +124,7 @@ formula <-    d_train$OUTPUT ~ BlkCnt + CapMVRVCur + CapMrktCurUSD + CapRealUSD 
 library(randomForest)
 
 set.seed(7)   
-rf <-  randomForest(m$formula,data = d_train[,-d_train$OUTPUT])
+rf <-  randomForest(formula,data = d_train[,-d_train$OUTPUT])
 
 output_f <- read.csv('ltc.csv')
 output_f$date[nrow(output_f)] 
