@@ -92,49 +92,7 @@ ix <- alea[1: NROW(alea)]
 
 d_train <- input[ix,]
 
-######################## Selección de variables de entrada #################################################
 
-library(MASS)  
-m = stepAIC(glm(d_train$OUTPUT~.,data = d_train[,-d_train$OUTPUT]))
-
-detach("package:MASS", unload = TRUE)
-
-#################### Model result from stepAIC ##############################################################
-
-formula <-    d_train$OUTPUT ~ BlkCnt + CapMVRVCur + CapMrktCurUSD + CapRealUSD + 
-  DiffMean + FeeMeanNtv + FeeMedNtv + IssContNtv + NVTAdj90 + 
-  PriceUSD + ROI30d + SplyCur + TxTfrValAdjUSD + TxTfrValMeanNtv + 
-  TxTfrValMeanUSD + TxTfrValUSD + VtyDayRet180d + VtyDayRet30d + 
-  VtyDayRet60d + BlkCnt.1 + BlkSizeByte.1 + BlkSizeMeanByte.1 + 
-  CapMVRVCur.1 + CapMrktCurUSD.1 + CapRealUSD.1 + DiffMean.1 + 
-  FeeMeanNtv.1 + FeeMeanUSD.1 + FeeMedNtv.1 + FeeMedUSD.1 + 
-  FeeTotNtv.1 + FeeTotUSD.1 + IssContNtv.1 + NVTAdj90.1 + PriceBTC.1 + 
-  ROI1yr.1 + ROI30d.1 + TxCnt.1 + TxTfr.1 + TxTfrValMeanNtv.1 + 
-  TxTfrValNtv.1 + TxTfrValUSD.1 + VtyDayRet180d.1 + VtyDayRet30d.1 + 
-  VtyDayRet60d.1 + Dia + Mes + Anio
-
-############ Ejecutar el algoritmo Random Forest #############################################################
-
-library(randomForest)
-
-set.seed(7)   
-rf <-  randomForest(m$formula,data = d_train[,-d_train$OUTPUT])
-
-output_f <- read.csv('ltc.csv')
-output_f$date[nrow(output_f)] 
-p_fut <- predict(rf, input_fut[NROW(input_fut),-input_fut$OUTPUT])
-p_60 <- predict(rf, input_60[,-input_60$OUTPUT])
-##################### Graficar los resultados #################################################################
-                
-jpeg('plot_ltc.jpg')
-                
-plot(input_60$OUTPUT,xlab = 'Días desde creación', ylab = 'Precio de Litecoin escalado ($)')
-points(p_60,col=2)  
-lines(p_60,col=2)  
-lines(input_60$OUTPUT)
-                
-dev.off()                 
- 
 ######################## Resultados para mañana ###############################################################           
                 
 
