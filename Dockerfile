@@ -3,7 +3,7 @@
 FROM debian
 
 RUN apt-get update && apt-get install r-base \
-wget lynx git -y 
+wget lynx git imagemagick -y 
 
 RUN echo "install.packages(c('MASS','dplyr', 'zoo','lubridate','randomForest'))" > packages_R.R && Rscript packages_R.R
 
