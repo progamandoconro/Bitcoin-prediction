@@ -15,5 +15,4 @@ RUN lynx -dump  https://coinmetrics.io/data-downloads/ | \
 awk '/csv/{print $2}' > urls.txt  \
 && wget -N urls.txt -i 
 
-RUN Rscript script_LTC.R
 
