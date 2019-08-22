@@ -10,14 +10,6 @@ Crypto-Lab está desarrollada 100 % a partir de software libre y de código abie
 
 Así se ven los resultados con la data de entrenamiento hasta la fecha: 
 
-# Bitcoin
-
-![alt text](https://github.com/progamandoconro/Bitcoin-prediction/blob/master/bitcoin_5_ago_2019?raw=true)
-
-# Litecoin
-
-![alt text](https://raw.githubusercontent.com/progamandoconro/Bitcoin-prediction/master/Screenshot_20190806_160605.png)
-
 Funcionalidades de Crypto-Lab todavia en desarrollo. Está es su apariencia:
 
 ![alt text](https://raw.githubusercontent.com/progamandoconro/Bitcoin-prediction/master/Screenshot_20190727_203738.png) 
