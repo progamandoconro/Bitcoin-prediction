@@ -1,4 +1,4 @@
-############### My docker container with an App to predict tomorrow's Litecoin price ##########################
+############### My docker container to predict prices of crypto-currencies ##########################
 
 FROM debian
 
@@ -11,8 +11,4 @@ RUN  git clone https://github.com/progamandoconro/Bitcoin-prediction.git
 
 WORKDIR Bitcoin-prediction
 
-RUN lynx -dump  https://coinmetrics.io/data-downloads/ | \
-awk '/csv/{print $2}' > urls.txt  \
-&& wget -N urls.txt -i 
-
-
+RUN bash update_data.sh
