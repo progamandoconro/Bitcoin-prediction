@@ -14,4 +14,4 @@ Funcionalidades de Crypto-Lab todavia en desarrollo. Está es su apariencia:
 
 ![alt text](https://raw.githubusercontent.com/progamandoconro/Bitcoin-prediction/master/Screenshot_20190727_203738.png) 
 
-Cripto-Lab está buscando inversionistas y colaboradores, por favor escribe a programandoconro@gmail.com, o visita programandonconro.wordpress.com/contact. 
+Crypto-Lab está buscando inversionistas y colaboradores, por favor escribe a programandoconro@gmail.com, o visita programandonconro.wordpress.com/contact. 
