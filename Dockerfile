@@ -84,7 +84,7 @@ awk '/csv/{print $2}' > urls  \
 
 RUN echo "install.packages(c('zoo','lubridate','dplyr','stringr'))" > libs_mineria.R && Rscript libs_mineria.R
 RUN echo "install.packages(c('randomForest','e1071','neuralnet','caret','reticulate','keras'))" > libs_ML.R && Rscript libs_ML.R
-RUN echo "install.packages (c('shiny','shinydashboard','ROSE''ggplot2'))" > lib_graf.R && Rscript lib_graf.R 
+RUN echo "install.packages (c('shiny','shinydashboard','ROSE','ggplot2'))" > lib_graf.R && Rscript lib_graf.R 
 
 
 
