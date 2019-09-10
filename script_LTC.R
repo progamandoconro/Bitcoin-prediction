@@ -121,13 +121,9 @@ formula <-    d_train$OUTPUT ~ BlkCnt + CapMVRVCur + CapMrktCurUSD + CapRealUSD 
 library(randomForest)
 
 set.seed(7)   
-rf <-  randomForest(formula,data = d_train[,-d_train$OUTPUT])
-
-output_f <- read.csv('ltc.csv')
-output_f$date[nrow(output_f)] 
-p_fut <- predict(rf, input_fut[NROW(input_fut),-input_fut$OUTPUT])
+rf <-  randomForest(formula,data = d_train)
               
-p_60 <- predict(rf, input_60[,colnames(input[,-input$OUTPUT]) ])
+p_60 <- predict(rf, input_60 )
 ##################### Graficar los resultados #################################################################
                 
 jpeg('plot_ltc.jpg')
