@@ -128,7 +128,7 @@ p_60 <- predict(rf, input_60 )
                 
 jpeg('plot_ltc.jpg')
                 
-plot(input_60$OUTPUT,xlab = 'Días desde creación', ylab = 'Precio de Litecoin escalado ($)',ylim=c(0.20,0.80))
+plot(input_60$OUTPUT,xlab = 'Tiempo (Dias recientes)', ylab = 'Precio de Litecoin escalado ($)',ylim=c(0.20,0.80))
 points(p_60,col=2)  
 lines(p_60,col=2)  
 lines(input_60$OUTPUT)
