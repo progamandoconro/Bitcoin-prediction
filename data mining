@@ -1,0 +1,90 @@
+library(shiny) 
+library(shinydashboard)
+library(dplyr) 
+library(reticulate) 
+library(zoo) 
+library(caret)
+library(lubridate)
+
+os <- import("os")
+#os$system ("find *.csv -delete")
+#os$system ("lynx -dump  https://coinmetrics.io/data-downloads/ | \
+#awk '/csv/{print $2}' > urls") 
+#os$system("wget -N urls -i")
+
+
+output <- read.csv('ada.csv')$PriceUSD
+
+
+#Transformamos a discretos 
+
+
+target<- vector()
+
+for (i in 1:NROW(output)) {
+  
+  target[i]<-ifelse( output[i]<output[i+1],1,0 )
+  
+}
+
+
+# Utilizamos los archivos descargados para seleccionar las variables explicatorias o de entrada para el algoritmo.
+# Para eso, listamos todos archivos csv y leemos cada uno con 'read.csv' gracias a 'lapply'
+
+input <- list.files(pattern = ".csv") %>%
+  lapply (read.csv) 
+
+# Seleccionamos las variables explicativas que tengan el mismo número de casos que la variable respuesta, las cortamos en funcion de tales casos y  finalmente unimos todas la variables en una sola data.frame
+
+n_i <- 1 ; n_f <- NROW(output)  ; n <- n_f-n_i +1
+
+crip <- sapply (input, function(x) nrow(x) < (n_f - n_i) )
+
+input <- input [!crip]%>%
+  lapply (function(x) x[nrow(x)-(nrow(x)-n):nrow(x),  ] )
+
+# Unir las columnas de la lista en una sola data.frame y cambiar los nombres de las columnas repetidas
+
+input <- do.call(cbind, input)
+
+colnames(input)<- make.unique( colnames(input))
+
+# Agreguemos data de la fecha a nuestras variables. Creamos los datos cruzados para tener las predicciones de mañana con los datos de hoy. liminemos las variables repetidas con las fechas. Además, reemplazamos los datos faltantes por la media de año, si continuan habiendo NA, por la media mensual y diaria. De esta forma aseguramos que no haya datos faltantes en nuestro set.
+
+input$Dia <- day(input$date) ; input$Mes <- month(input$date) ; input$Anio <- year(input$date)
+input_fut <- input
+
+
+fut_time=1
+
+input <- input [-fut_time,]
+input$OUTPUT <- output [(-NROW(output)-fut_time):-NROW(output)]
+
+
+# Vamos a eliminar la data redundante 
+
+foo <- function(input) {
+  out <- lapply(input, function(x) length(unique(x)))
+  want <- which(!out > 1)
+  unlist(want)
+}
+
+input <- input[,-foo(input)]
+
+input<- input[, -grep("date", colnames(input))]
+
+
+input <-  na.aggregate(input,by='Anio')%>%
+  na.aggregate(by='Mes')%>%
+  na.aggregate(by='Dia')%>%
+  na.aggregate()
+
+normalize <- function(x) { 
+  return((x - min(x)) / (max(x) - min(x)))
+}
+
+
+input<- lapply(input, normalize)%>%
+  as.data.frame()
+
+write.csv(input,'input.csv',row.names = F)
